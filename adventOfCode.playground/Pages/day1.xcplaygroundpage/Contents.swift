@@ -22,7 +22,7 @@ func part1(praseInput: [String]) -> Int {
     return isCaling(praseInput: inputArray, start: 0, end: inputArray.count, counted: 0)
 }
 
-//print(part1(praseInput: inputArray)) //454
+print(part1(praseInput: inputArray)) //454
 
 //
 // I am 💩
@@ -114,20 +114,21 @@ func part1(praseInput: [String]) -> Int {
 //}
 
 // Give up and startet new with some google
+// With strickt FP is it to slow :(
 
 func part2(inputArray: [String]) -> Int {
     var number = 0
-    var seen = [Int]()
+    var found: Set<Int> = [number]
     var index = 0
     while true {
-        number = number + Int(inputArray[index])!
-        index = (index + 1) % inputArray.count
-        if seen.contains(number) {
+        number += Int(inputArray[index])!
+        if (found.contains(number)) {
             return number
+        } else {
+            index = (index + 1) % inputArray.count
+            found.insert(number)
         }
-        seen.append(number)
     }
     return number
 }
-
 print(part2(inputArray: inputArray))
