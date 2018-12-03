@@ -14,15 +14,11 @@ func part1(input: String) -> Int {
             let counted = string.filter { $0 == Character(x)}.count
             if (counted == 2) {
                 if (isCounutedTow == 0) {
-                    print("found2")
-                    print(isCounutedTow)
                     countedTow = countedTow + 1
                     isCounutedTow = isCounutedTow + 1
                 }
             } else if (counted == 3) {
                 if (isCounutedThree == 0) {
-                    print("found3")
-                    print(isCounutedThree)
                     countedThree = countedThree + 1
                     isCounutedThree = isCounutedThree + 1
                 }
@@ -31,7 +27,7 @@ func part1(input: String) -> Int {
     }
     return countedThree * countedTow
 }
-//print(part1(input: input))
+print("Part1: \(part1(input: input))")
 
 let test = """
 abcde
@@ -42,46 +38,37 @@ fguij
 axcye
 wvxyz
 """
-//["cvfqlbidheyujgtrswxmckqnap", "cvzqlbidheyujgtrswxmckqnap"]
-func part2(input: String) {
-    let inputArray1 = input.components(separatedBy:  "\n")
-    let inputArray2 = input.components(separatedBy:  "\n")
+
+func part2(input: String) -> String {
+    let inputArray = input.components(separatedBy:  "\n")
     var indexArray1 = 0
     var indexArray2 = 0
-    var resultArray = [String]()
+    var finalString = ""
     
-    for stringOne in inputArray1 {
+    for stringOne in inputArray {
         indexArray1 = indexArray1 + 1
         indexArray2 = 0
-        print("=================")
-        for checkString in inputArray2 {
+        for checkString in inputArray {
             indexArray2 = indexArray2 + 1
             if (indexArray1 != indexArray2) {
-                if ((stringOne.elementsEqual(checkString)) == true) {
-                    print("Passwords are equal")
-                } else {
-                    let difference = zip(checkString, stringOne).filter{ $0 != $1 }
-                    if (difference.count == 1) {
-                        print("Found")
-                        resultArray.append(stringOne)
-                        //print(difference)//[("z", "f")]
+                let difference = zip(checkString, stringOne).filter{ $0 != $1 }
+                if (difference.count == 1) {
+                    let found1 = String(difference[0].0)
+                    let found2 = String(difference[0].1)
+                    for i in stringOne {
+                        if String(i) == found2 || String(i) == found1 {
+                            continue
+                        } else if finalString.count == stringOne.count - 1 {
+                            break
+                        } else {
+                            finalString.append(i)
+                        }
                     }
                 }
             }
         }
     }
-    print(resultArray)
+    return finalString
 }
-//cvqlbidheyujgtrswxmckqnap
-
-part2(input: input)
+print("Part2: \(part2(input: input))")
 //: [Next](@next)
-/*
- var found1 = String(difference[0])
- var found2 = String(difference[1])
- var resultString = String(zip(found1, found2).reduce(into: "", {
- state, element in if element.0 == element.1 {
- state.append(element.0)
- }
- }))
- */
