@@ -70,7 +70,7 @@ func part1Old(parseInput: String) -> Int {
                 if isSetW < Int(widthHeight[0])! {
                     while isSetW < Int(widthHeight[0])! {
                         
-                        if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 0 { // Sobald ich hier != hin schreibe geht es viel schneller aber kommt ein falches ergebnis bei rum :(
+                        if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] != 0 { // Sobald ich hier != hin schreibe geht es viel schneller aber kommt ein falches ergebnis bei rum :(
                             maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] = 1
                         } else if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 2 {
                             //                            overlayCounter += 1
@@ -110,11 +110,12 @@ func part1Old(parseInput: String) -> Int {
     createMaxArray()
     //    count()
     //    let squerInc = HgihtOfMap * LengthOfMap - zeroCounter
-    for i in maxArray {
-        print(i)
-    }
-    //let test = maxArray.reduce(0) { $0 + $1.reduce(0) { $1 > 1 ? $0 + 1 : $0 } }
-    return overlayCounter
+//    for i in maxArray {
+//        print(i)
+//    }
+    let test = maxArray.reduce(0) { $0 + $1.reduce(0) { $1 > 1 ? $0 + 1 : $0 } }
+    let result = overlayCounter - test
+    return result
 }
 
 print(part1Old(parseInput: input))
