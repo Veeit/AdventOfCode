@@ -140,15 +140,17 @@ func part1New(parseInput: String) -> Int {
         HgihtOfMap = maxHeight + maxTop
     }
     func createMaxArray() {
-        //        yes I do basacley the same thing as in findMax :face_Palm:
+
         maxArray = [[Int]](repeating: [Int](repeating: 0, count: maxHeight + maxLeft), count: maxTop + maxHeight)
         for part in inputSet {
 //            let id = part[0].replacingOccurrences(of: "#", with: "")
+//      yes I do basacley the same thing as in findMax :face_Palm:
             let leftTop = part[2].replacingOccurrences(of: ":", with: "").split(separator: ",")
             let widthHeight = part[3].split(separator: "x")
             
             var isSetW = 0
             var isSetH = 0
+            // Don´t use If arount this while loops :affe_no_see:
             while isSetH < Int(widthHeight[1])! {
                 while isSetW < Int(widthHeight[0])! {
                     if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 0 {
@@ -168,11 +170,97 @@ func part1New(parseInput: String) -> Int {
     }
     findMax()
     createMaxArray()
-//    let test = maxArray.reduce(0) { $0 + $1.reduce(0) { $1 > 1 ? $0 + 1 : $0 } }
+    
     let result = overlayCounter
 //    for i in maxArray {
 //        print(i)
 //    }
     return result
 }
-print(part1New(parseInput: input))
+//print(part1New(parseInput: input))
+
+// a shity copy of part1New with some small changes
+func part2(parseInput: String) -> Set<[Int]> {
+    let inputArrayFabrick = parseInput.components(separatedBy:  "\n")
+    var VisuallArray = [String]()
+    var inputSet = Set<[String]> ()
+    for part in inputArrayFabrick {
+        inputSet.insert(part.components(separatedBy: " "))
+    }
+    var maxLeft = 0
+    var maxTop = 0
+    var maxWidth = 0
+    var maxHeight = 0
+    var LengthOfMap = 0
+    var HgihtOfMap = 0
+    
+    var maxArray = [[Int]]()
+    var overlayCounter = 0
+    var overlayIDSet = Set<[Int]>()
+    
+    func findMax() {
+        for part in inputSet {
+            let leftTop = part[2].replacingOccurrences(of: ":", with: "").split(separator: ",")
+            let widthHeight = part[3].split(separator: "x")
+            if Int(leftTop[0])! > maxLeft{
+                maxLeft = Int(leftTop[0])!
+            }
+            if Int(leftTop[1])! > maxTop{
+                maxTop = Int(leftTop[1])!
+            }
+            if Int(widthHeight[0])! > maxWidth{
+                maxWidth = Int(widthHeight[0])!
+            }
+            if Int(widthHeight[1])! > maxHeight{
+                maxHeight = Int(widthHeight[1])!
+            }
+        }
+        LengthOfMap = maxWidth + maxLeft
+        HgihtOfMap = maxHeight + maxTop
+    }
+    func createMaxArray() {
+        var idSet = Set<[Int]>()
+        maxArray = [[Int]](repeating: [Int](repeating: 0, count: maxHeight + maxLeft), count: maxTop + maxHeight)
+        for part in inputSet {
+            let id = Int(part[0].replacingOccurrences(of: "#", with: ""))!
+            let leftTop = part[2].replacingOccurrences(of: ":", with: "").split(separator: ",")
+            let widthHeight = part[3].split(separator: "x")
+            
+            var isSetW = 0
+            var isSetH = 0
+            // Don´t use If arount this while loops :affe_no_see:
+            // here a some small changes :) some have swag
+            while isSetH < Int(widthHeight[1])! {
+                while isSetW < Int(widthHeight[0])! {
+                    if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 0 {
+                        maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] = id
+                        overlayIDSet.insert([id])
+                    } else if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] != 0 && maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] != -2  {
+                        overlayCounter += 1
+                        let oldID = maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW]
+                        idSet.insert([id])
+                        idSet.insert([oldID])
+                        maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] = -2
+                    }
+                    isSetW += 1
+                }
+                isSetH += 1
+                isSetW = 0
+            }
+        }
+        for id in overlayIDSet {
+            if idSet.contains(id) {
+                overlayIDSet.remove(id)
+            }
+        }
+    }
+    findMax()
+    createMaxArray()
+    
+    let result = overlayCounter
+    //    for i in maxArray {
+    //        print(i)
+    //    }
+    return overlayIDSet
+}
+print(part2(parseInput: input))
