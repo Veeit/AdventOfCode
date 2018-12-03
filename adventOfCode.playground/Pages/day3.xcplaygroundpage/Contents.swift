@@ -35,10 +35,10 @@ func part1Old(parseInput: String) -> Int {
     
     func findMax() {
         for part in inputSet {
-//            let id = part[0]
+            //            let id = part[0]
             let leftTop = part[2].replacingOccurrences(of: ":", with: "").split(separator: ",")
             let widthHeight = part[3].split(separator: "x")
-//            print(leftTop)
+            //            print(leftTop)
             if Int(leftTop[0])! > maxLeft{
                 maxLeft = Int(leftTop[0])!
             }
@@ -59,20 +59,22 @@ func part1Old(parseInput: String) -> Int {
         //        yes I do basacley the same thing as in findMax :face_Palm:
         maxArray = [[Int]](repeating: [Int](repeating: 0, count: maxHeight + maxLeft), count: maxTop + maxHeight)
         for part in inputSet {
-//            let id = part[0].replacingOccurrences(of: "#", with: "")
+            //            let id = part[0].replacingOccurrences(of: "#", with: "")
             let leftTop = part[2].replacingOccurrences(of: ":", with: "").split(separator: ",")
             let widthHeight = part[3].split(separator: "x")
             
             var isSetW = 0
             var isSetH = 0
             while isSetH < Int(widthHeight[1])! {
-//                maxArray[Int(leftTop[0])! + isSetH ][Int(leftTop[0])!] = Int(1)
+                //                maxArray[Int(leftTop[0])! + isSetH ][Int(leftTop[0])!] = Int(1)
                 if isSetW < Int(widthHeight[0])! {
                     while isSetW < Int(widthHeight[0])! {
-                        if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 2 {
-                            continue
-                        } else if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 0 { // Sobald ich hier != hin schreibe geht es viel schneller aber kommt ein falches ergebnis bei rum :(
+                        
+                        if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 0 { // Sobald ich hier != hin schreibe geht es viel schneller aber kommt ein falches ergebnis bei rum :(
                             maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] = 1
+                        } else if maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] == 2 {
+                            //                            overlayCounter += 1
+                            continue
                         } else {
                             maxArray[Int(leftTop[1])! + isSetH][Int(leftTop[0])! + isSetW ] = 2
                             overlayCounter += 1
@@ -85,29 +87,29 @@ func part1Old(parseInput: String) -> Int {
                 }
             }
             while isSetH < Int(widthHeight[1])! {
-//                print(leftTop[0])
+                //                print(leftTop[0])
                 maxArray[Int(leftTop[1])! + 1 + isSetH ][Int(leftTop[0])!] = Int(1)
                 isSetH += 1
             }
         }
     }
-//
-//    var zeroCounter = 0
-//
-//    func count() {
-//        for line in maxArray {
-//            for number in line {
-//                if number == Int(0) {
-//                    zeroCounter += 1
-//                }
-//            }
-//        }
-//    }
+    //
+    //    var zeroCounter = 0
+    //
+    //    func count() {
+    //        for line in maxArray {
+    //            for number in line {
+    //                if number == Int(0) {
+    //                    zeroCounter += 1
+    //                }
+    //            }
+    //        }
+    //    }
     
     findMax()
     createMaxArray()
-//    count()
-//    let squerInc = HgihtOfMap * LengthOfMap - zeroCounter
+    //    count()
+    //    let squerInc = HgihtOfMap * LengthOfMap - zeroCounter
     for i in maxArray {
         print(i)
     }
