@@ -257,7 +257,6 @@ func part2(parseInput: String) -> Set<[Int]> {
     findMax()
     createMaxArray()
     
-    let result = overlayCounter
     //    for i in maxArray {
     //        print(i)
     //    }
