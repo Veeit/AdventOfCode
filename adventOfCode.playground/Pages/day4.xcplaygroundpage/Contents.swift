@@ -1349,8 +1349,7 @@ func part1New(parseInput: String) {
             print(entry)
             
         }
-        var maxiID = String(maxSleepID!)! as! Int
-        print("result \(maxiID * pos)")
+        print("result \(Int((sleepMaxTime.first?.key)!)! * pos)")
 //        print(maxSleepCount)
 //        print(entry)
     }
